@@ -92,5 +92,12 @@ public class TurmaService {
         }
         throw new IllegalArgumentException(String.format("Código  %s de turma não cadatrado",codTurma));
     }
+    public Turma findByCodTurmaEntidade(String codTurma){
+        Optional<Turma> turmaOptional = this.iturmaReposytory.findByCodTurma(codTurma);
+        if (turmaOptional.isPresent()){
+            return turmaOptional.get();
+        }
+        throw new IllegalArgumentException(String.format("Código  %s de turma não cadatrado",codTurma));
+    }
 
 }
