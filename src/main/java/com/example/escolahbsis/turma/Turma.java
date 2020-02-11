@@ -3,13 +3,15 @@ package com.example.escolahbsis.turma;
 import com.example.escolahbsis.instituicao.Instituicao;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "turma")
-public class Turma {
+public class Turma implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
     @Column(name = "cod_turma", nullable = true, length = 10)
     private String codTurma;

@@ -88,6 +88,13 @@ public class InstituicaoService {
         LOGGER.info("Executando Delete para instituição de ID: [{}]", id);
         this.iInstituicaoRepository.deleteById(id);
     }
+    public Instituicao findByCodIstituicao( String codInstituicao){
+        Optional<Instituicao> instituicaoOptional = this.iInstituicaoRepository.findByCodInstituicao(codInstituicao);
+        if (instituicaoOptional.isPresent()){
+            return instituicaoOptional.get();
+        }
+        throw new IllegalArgumentException("Código da Instituição não cadatrado");
+    }
 
 
 }
