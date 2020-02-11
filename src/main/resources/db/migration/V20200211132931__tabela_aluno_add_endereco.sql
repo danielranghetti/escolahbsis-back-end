@@ -1,0 +1,2 @@
+ALTER TABLE aluno
+ADD endereco_aluno VARCHAR(150) NOT NULL;
