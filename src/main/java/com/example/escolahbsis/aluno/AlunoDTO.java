@@ -1,5 +1,10 @@
 package com.example.escolahbsis.aluno;
 
+import com.example.escolahbsis.alunoTurma.AlunoTurmaDTO;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class AlunoDTO {
 
     private long id;
@@ -10,11 +15,12 @@ public class AlunoDTO {
     private String enderecoAluno;
     private String telefoneAluno;
     private int matricula;
+    private List<AlunoTurmaDTO> alunoTurmaDTOS;
 
     public AlunoDTO() {
     }
 
-    public AlunoDTO(long id, String codAluno, String nomeAluno, String sobrenomeAluno, String responsavel, String enderecoAluno, String telefoneAluno, int matricula) {
+    public AlunoDTO(long id, String codAluno, String nomeAluno, String sobrenomeAluno, String responsavel, String enderecoAluno, String telefoneAluno, int matricula, List<AlunoTurmaDTO> alunoTurmaDTOS) {
         this.id = id;
         this.codAluno = codAluno;
         this.nomeAluno = nomeAluno;
@@ -23,9 +29,12 @@ public class AlunoDTO {
         this.enderecoAluno = enderecoAluno;
         this.telefoneAluno = telefoneAluno;
         this.matricula = matricula;
+        this.alunoTurmaDTOS = alunoTurmaDTOS;
     }
 
     public static AlunoDTO of(Aluno aluno){
+        List<AlunoTurmaDTO> alunoTurmaDTOList = new ArrayList<>();
+        aluno.getAlunoTurmaList().forEach(alunoTurma -> alunoTurmaDTOList.add(AlunoTurmaDTO.of(alunoTurma)));
         return new AlunoDTO(
                 aluno.getId(),
                 aluno.getCodAluno(),
@@ -34,10 +43,19 @@ public class AlunoDTO {
                 aluno.getResponsavel(),
                 aluno.getEnderecoAluno(),
                 aluno.getTelefoneAluno(),
-                aluno.getMatricula()
+                aluno.getMatricula(),
+                alunoTurmaDTOList
         );
 
 
+    }
+
+    public List<AlunoTurmaDTO> getAlunoTurmaDTOS() {
+        return alunoTurmaDTOS;
+    }
+
+    public void setAlunoTurmaDTOS(List<AlunoTurmaDTO> alunoTurmaDTOS) {
+        this.alunoTurmaDTOS = alunoTurmaDTOS;
     }
 
     public long getId() {
@@ -115,6 +133,7 @@ public class AlunoDTO {
                 ", enderecoAluno='" + enderecoAluno + '\'' +
                 ", telefoneAluno='" + telefoneAluno + '\'' +
                 ", matricula=" + matricula +
+                ", alunoTurmaDTOS=" + alunoTurmaDTOS +
                 '}';
     }
 }

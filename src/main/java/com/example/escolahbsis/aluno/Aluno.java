@@ -1,7 +1,11 @@
 package com.example.escolahbsis.aluno;
 
+import com.example.escolahbsis.alunoTurma.AlunoTurma;
+import com.example.escolahbsis.alunoTurma.AlunoTurmaDTO;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "aluno")
@@ -25,6 +29,17 @@ public class Aluno implements Serializable {
     private String telefoneAluno;
     @Column(name = "matricula", nullable = true, length = 255)
     private int matricula;
+
+    @OneToMany(mappedBy = "aluno")
+    private List<AlunoTurma> alunoTurmaList;
+
+    public List<AlunoTurma> getAlunoTurmaList() {
+        return alunoTurmaList;
+    }
+
+    public void setAlunoTurmaList(List<AlunoTurma> alunoTurmaList) {
+        this.alunoTurmaList = alunoTurmaList;
+    }
 
     public long getId() {
         return id;
@@ -101,6 +116,9 @@ public class Aluno implements Serializable {
                 ", enderecoAluno='" + enderecoAluno + '\'' +
                 ", telefoneAluno='" + telefoneAluno + '\'' +
                 ", matricula=" + matricula +
+                ", alunoTurmaList=" + alunoTurmaList +
                 '}';
     }
+
+
 }
