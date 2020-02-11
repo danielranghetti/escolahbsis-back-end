@@ -1,0 +1,8 @@
+sqlserverboletim1:
+  image: microsoft/mssql-server-linux
+  hostname: sqlserverBoletim
+  environment:
+    - ACCEPT_EULA=Y
+    - SA_PASSWORD=Escola123
+  ports:
+    - 1435:1433
