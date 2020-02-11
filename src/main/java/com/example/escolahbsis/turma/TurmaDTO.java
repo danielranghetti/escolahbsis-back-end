@@ -52,7 +52,7 @@ public class TurmaDTO {
         this.instituicao = instituicao;
     }
 
-    public TurmaDTO of(Turma turma){
+    public static TurmaDTO of(Turma turma){
         return new TurmaDTO(
                 turma.getId(),
                 turma.getCodTurma(),

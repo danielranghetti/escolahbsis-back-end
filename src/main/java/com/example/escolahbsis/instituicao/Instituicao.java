@@ -3,12 +3,14 @@ package com.example.escolahbsis.instituicao;
 
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "instituicao")
-public class Instituicao {
+public class Instituicao implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
     @Column(name = "cod_instituicao", unique = true, nullable = false,length = 10)
     private String codInstituicao;
