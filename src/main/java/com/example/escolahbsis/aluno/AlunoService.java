@@ -127,10 +127,10 @@ public class AlunoService {
         }
         throw new IllegalArgumentException(String.format("Aluno com ID %s não cadastrado",id));
     }
-    public AlunoDTO findByCodAluno(String codAluno){
+    public Aluno findByCodAluno(String codAluno){
         Optional<Aluno> alunoOptional = this.iAlunoRepository.findByCodAluno(codAluno);
         if (alunoOptional.isPresent()){
-            return AlunoDTO.of(alunoOptional.get());
+            return alunoOptional.get();
         }
         throw new IllegalArgumentException(String.format("Código Aluno %s não cadastrado",codAluno));
     }
