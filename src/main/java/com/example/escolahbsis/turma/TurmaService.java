@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -48,6 +50,9 @@ public class TurmaService {
         if (StringUtils.isEmpty(turmaDTO.getCodTurma())) {
             throw new IllegalArgumentException("Código da turma não deve ser nulo");
         }
+        if (turmaDTO.getCodTurma().length() != 10){
+            throw new IllegalArgumentException("Código da turma deve conter dez digitos");
+        }
         if (StringUtils.isEmpty(turmaDTO.getPeriodoTurma())) {
             throw new IllegalArgumentException("Periodo da turma não deve ser nulo");
         }
@@ -75,31 +80,43 @@ public class TurmaService {
     }
 
     public void delete(long id) {
-        LOGGER.info("Executando delete para turma de ID: [{}]", id);
+        LOGGER.info("Executando delete para turma de Código: [{}]", id);
         this.iturmaReposytory.deleteById(id);
     }
-    public TurmaDTO findById(Long id){
+
+    public TurmaDTO findById(Long id) {
         Optional<Turma> turmaOptional = this.iturmaReposytory.findById(id);
-        if (turmaOptional.isPresent()){
+        if (turmaOptional.isPresent()) {
             return TurmaDTO.of(turmaOptional.get());
         }
-        throw new IllegalArgumentException(String.format("ID %s de turma não existe",id));
-    }
-    public TurmaDTO findByCodTurma(String codTurma){
-        Optional<Turma> turmaOptional = this.iturmaReposytory.findByCodTurma(codTurma);
-        if (turmaOptional.isPresent()){
-            return TurmaDTO.of(turmaOptional.get());
-        }
-        throw new IllegalArgumentException(String.format("Código  %s de turma não cadatrado",codTurma));
-    }
-    public Turma findByCodTurmaEntidade(String codTurma){
-        Optional<Turma> turmaOptional = this.iturmaReposytory.findByCodTurma(codTurma);
-        if (turmaOptional.isPresent()){
-            return turmaOptional.get();
-        }
-        throw new IllegalArgumentException(String.format("Código  %s de turma não cadatrado",codTurma));
+        throw new IllegalArgumentException(String.format("ID %s de turma não existe", id));
     }
 
+    public TurmaDTO findByCodTurma(String codTurma) {
+        Optional<Turma> turmaOptional = this.iturmaReposytory.findByCodTurma(codTurma);
+        if (turmaOptional.isPresent()) {
+            return TurmaDTO.of(turmaOptional.get());
+        }
+        throw new IllegalArgumentException(String.format("Código  %s de turma não cadatrado", codTurma));
+    }
+
+    public Turma findByCodTurmaEntidade(String codTurma) {
+        Optional<Turma> turmaOptional = this.iturmaReposytory.findByCodTurma(codTurma);
+        if (turmaOptional.isPresent()) {
+            return turmaOptional.get();
+        }
+        throw new IllegalArgumentException(String.format("Código  %s de turma não cadatrado", codTurma));
+    }
+
+    public List<Turma> findAll() {
+        List<Turma> turmas = new ArrayList<>();
+        try {
+            turmas = iturmaReposytory.findAll();
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+        }
+        return turmas;
+    }
 
 
 }

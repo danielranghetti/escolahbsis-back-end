@@ -1,6 +1,10 @@
 package com.example.escolahbsis.aluno;
 
 import com.example.escolahbsis.alunoTurma.AlunoTurmaDTO;
+import com.example.escolahbsis.disciplina.Disciplina;
+import com.example.escolahbsis.nota.Nota;
+import com.example.escolahbsis.professor.Professor;
+import com.example.escolahbsis.turma.Turma;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +21,7 @@ public class AlunoDTO {
     private int matricula;
     private List<AlunoTurmaDTO> alunoTurmaDTOS;
 
+
     public AlunoDTO() {
     }
 
@@ -32,7 +37,21 @@ public class AlunoDTO {
         this.alunoTurmaDTOS = alunoTurmaDTOS;
     }
 
-    public static AlunoDTO of(Aluno aluno){
+    public AlunoDTO(long id, String codAluno, String nomeAluno, String sobrenomeAluno, String responsavel, String enderecoAluno,
+                    String telefoneAluno, int matricula, List<AlunoTurmaDTO> alunoTurmaDTOS, Disciplina disciplina, Turma turma, Professor professor, Nota nota) {
+        this.id = id;
+        this.codAluno = codAluno;
+        this.nomeAluno = nomeAluno;
+        this.sobrenomeAluno = sobrenomeAluno;
+        this.responsavel = responsavel;
+        this.enderecoAluno = enderecoAluno;
+        this.telefoneAluno = telefoneAluno;
+        this.matricula = matricula;
+        this.alunoTurmaDTOS = alunoTurmaDTOS;
+
+    }
+
+    public static AlunoDTO of(Aluno aluno) {
         List<AlunoTurmaDTO> alunoTurmaDTOList = new ArrayList<>();
         aluno.getAlunoTurmaList().forEach(alunoTurma -> alunoTurmaDTOList.add(AlunoTurmaDTO.of(alunoTurma)));
         return new AlunoDTO(
@@ -49,6 +68,7 @@ public class AlunoDTO {
 
 
     }
+
 
     public List<AlunoTurmaDTO> getAlunoTurmaDTOS() {
         return alunoTurmaDTOS;

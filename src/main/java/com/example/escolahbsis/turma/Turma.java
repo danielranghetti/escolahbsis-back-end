@@ -1,6 +1,7 @@
 package com.example.escolahbsis.turma;
 
 import com.example.escolahbsis.instituicao.Instituicao;
+
 import javax.persistence.*;
 import java.io.Serializable;
 

@@ -5,6 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/turma")
 public class TurmaRest {
@@ -17,27 +20,37 @@ public class TurmaRest {
     public TurmaRest(TurmaService turmaService) {
         this.turmaService = turmaService;
     }
-    @PostMapping("/salva")
+
+    @PostMapping
     public TurmaDTO save(@RequestBody TurmaDTO turmaDTO) {
         LOGGER.info("Recebendo solicitação de persistência para turma...");
         LOGGER.debug("Payaload: {}", turmaDTO);
 
         return this.turmaService.save(turmaDTO);
     }
+
     @GetMapping("/{id}")
-    public TurmaDTO find(@PathVariable("id") long id){
-        LOGGER.info("Recebendo consulta para ID: {}",id);
+    public TurmaDTO find(@PathVariable("id") long id) {
+        LOGGER.info("Recebendo consulta para ID: {}", id);
         return this.turmaService.findById(id);
     }
-    @PutMapping("/Altera/{id}")
-    public TurmaDTO udpate(@PathVariable("id") long id, @RequestBody TurmaDTO turmaDTO){
-        LOGGER.info("Recebendo atualização para turma de ID: {}" ,id);
-        LOGGER.debug("Playload: {}" , turmaDTO);
-        return this.turmaService.update(turmaDTO,id);
+
+    @GetMapping("/consulta")
+    public List<Turma> findall() {
+        LOGGER.info("Recebendo consulta para turma");
+        return this.turmaService.findAll();
     }
+
+    @PutMapping("/Altera/{id}")
+    public TurmaDTO udpate(@PathVariable("id") long id, @RequestBody TurmaDTO turmaDTO) {
+        LOGGER.info("Recebendo atualização para turma de ID: {}", id);
+        LOGGER.debug("Playload: {}", turmaDTO);
+        return this.turmaService.update(turmaDTO, id);
+    }
+
     @DeleteMapping("/deleta/{id}")
-    public void delete(@PathVariable("id") long id){
-        LOGGER.info("recebendo delete para o ID: {}",id);
+    public void delete(@PathVariable("id") long id) {
+        LOGGER.info("recebendo delete para o ID: {}", id);
         this.turmaService.delete(id);
     }
 }

@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.Optional;
 
@@ -19,7 +20,7 @@ public class ProfessorService {
     }
 
     public ProfessorDTO save(ProfessorDTO professorDTO) {
-
+        this.validacao(professorDTO);
         LOGGER.info("Salvando professor");
         LOGGER.debug("Professor: {}", professorDTO);
 
@@ -35,6 +36,31 @@ public class ProfessorService {
         professor = iProfessorRepository.save(professor);
         return ProfessorDTO.of(professor);
 
+    }
+
+    public void validacao(ProfessorDTO professorDTO) {
+        LOGGER.info("validando Professor");
+        if (professorDTO == null) {
+            throw new IllegalArgumentException("Professor não deve ser nulo");
+        }
+        if (StringUtils.isEmpty(professorDTO.getCodProfessor())) {
+            throw new IllegalArgumentException("Código de professor deve ser informado");
+        }
+        if (professorDTO.getCodProfessor().length() != 10) {
+            throw new IllegalArgumentException("Código do professor deve conter dez digitos");
+        }
+        if (StringUtils.isEmpty(professorDTO.getEnderecoProfessor())) {
+            throw new IllegalArgumentException("O endereço do professor deve ser informado");
+        }
+        if (StringUtils.isEmpty(professorDTO.getNomeProfessor())) {
+            throw new IllegalArgumentException("O nome do professor deve ser informado");
+        }
+        if (StringUtils.isEmpty(professorDTO.getSobrenomeProfessor())) {
+            throw new IllegalArgumentException("O sobrenome do professor deve ser informado");
+        }
+        if (StringUtils.isEmpty(professorDTO.getTelefoneProfessor())) {
+            throw new IllegalArgumentException("O telefoene do professor deve ser informado");
+        }
     }
 
     public ProfessorDTO findById(long id) {

@@ -1,10 +1,5 @@
 package com.example.escolahbsis.instituicao;
 
-import org.hibernate.validator.constraints.UniqueElements;
-
-import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.NotNull;
-
 public class InstituicaoDTO {
 
     private long id;
@@ -16,14 +11,15 @@ public class InstituicaoDTO {
     public InstituicaoDTO() {
     }
 
-    public InstituicaoDTO(long id, String codInstituicao, String nomeInstituicao, String telefoneInstituicao,String enderecoInstituicao) {
+    public InstituicaoDTO(long id, String codInstituicao, String nomeInstituicao, String telefoneInstituicao, String enderecoInstituicao) {
         this.id = id;
         this.codInstituicao = codInstituicao;
         this.nomeInstituicao = nomeInstituicao;
         this.telefoneInstituicao = telefoneInstituicao;
         this.enderecoInstituicao = enderecoInstituicao;
     }
-    public static InstituicaoDTO of(Instituicao instituicao){
+
+    public static InstituicaoDTO of(Instituicao instituicao) {
         return new InstituicaoDTO(
                 instituicao.getId(),
                 instituicao.getCodInstituicao(),

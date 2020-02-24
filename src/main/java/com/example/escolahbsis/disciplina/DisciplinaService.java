@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.Optional;
 
@@ -22,10 +23,31 @@ public class DisciplinaService {
         this.professorService = professorService;
     }
 
-    public DisciplinaDTO save(DisciplinaDTO disciplinaDTO){
+    public void validacao(DisciplinaDTO disciplinaDTO) {
+        LOGGER.info("Validando Disciplina");
+
+        if (disciplinaDTO == null) {
+            throw new IllegalArgumentException("Disciplina não deve ser nula");
+        }
+        if (StringUtils.isEmpty(disciplinaDTO.getNomeDisciplina())) {
+            throw new IllegalArgumentException("Nome disciplina não deve ser nulo");
+        }
+        if (StringUtils.isEmpty(disciplinaDTO.getProfessor())) {
+            throw new IllegalArgumentException("Professor da disciplina não deve ser nulo");
+        }
+        if (StringUtils.isEmpty(disciplinaDTO.getCodDisciplina())) {
+            throw new IllegalArgumentException("Código da disciplina não mdeve ser nulo");
+        }
+        if (disciplinaDTO.getCodDisciplina().length() != 10) {
+            throw new IllegalArgumentException("código da disciplina tem que conte dez digitos");
+        }
+    }
+
+    public DisciplinaDTO save(DisciplinaDTO disciplinaDTO) {
+        this.validacao(disciplinaDTO);
         LOGGER.info("Salvando disciplina");
         LOGGER.debug("Professor: {}", disciplinaDTO);
-        com.example.escolahbsis.disciplina.Disciplina disciplina = new com.example.escolahbsis.disciplina.Disciplina();
+        Disciplina disciplina = new Disciplina();
 
         disciplina.setId(disciplinaDTO.getId());
         disciplina.setCodDisciplina(disciplinaDTO.getCodDisciplina());
@@ -35,24 +57,27 @@ public class DisciplinaService {
         disciplina = this.iDisciplinaRepository.save(disciplina);
         return DisciplinaDTO.of(disciplina);
     }
-    public DisciplinaDTO findById(long id){
-        Optional<com.example.escolahbsis.disciplina.Disciplina> disciplinaOptional =this.iDisciplinaRepository.findById(id);
-        if (disciplinaOptional.isPresent()){
+
+    public DisciplinaDTO findById(long id) {
+        Optional<Disciplina> disciplinaOptional = this.iDisciplinaRepository.findById(id);
+        if (disciplinaOptional.isPresent()) {
             return DisciplinaDTO.of(disciplinaOptional.get());
         }
-        throw new IllegalArgumentException(String.format("Disciplina de ID %s não existe",id));
+        throw new IllegalArgumentException(String.format("Disciplina de ID %s não existe", id));
     }
-    public com.example.escolahbsis.disciplina.Disciplina findByCodDisciplinaEntidade(String codDisciplina){
-        Optional<com.example.escolahbsis.disciplina.Disciplina> disciplinaOptional = this.iDisciplinaRepository.findByCodDisciplina(codDisciplina);
-        if (disciplinaOptional.isPresent()){
+
+    public Disciplina findByCodDisciplinaEntidade(String codDisciplina) {
+        Optional<Disciplina> disciplinaOptional = this.iDisciplinaRepository.findByCodDisciplina(codDisciplina);
+        if (disciplinaOptional.isPresent()) {
             return disciplinaOptional.get();
         }
         throw new IllegalArgumentException(String.format("Código de disciplina %s não cadrastado", codDisciplina));
     }
-    public DisciplinaDTO update(DisciplinaDTO disciplinaDTO, long id){
-        Optional<com.example.escolahbsis.disciplina.Disciplina> disciplinaOptional = this.iDisciplinaRepository.findById(id);
-        if (disciplinaOptional.isPresent()){
-            com.example.escolahbsis.disciplina.Disciplina disciplinaExistente = disciplinaOptional.get();
+
+    public DisciplinaDTO update(DisciplinaDTO disciplinaDTO, long id) {
+        Optional<Disciplina> disciplinaOptional = this.iDisciplinaRepository.findById(id);
+        if (disciplinaOptional.isPresent()) {
+            Disciplina disciplinaExistente = disciplinaOptional.get();
 
             LOGGER.info("Atualizando categoria... id: [{}]", disciplinaExistente.getId());
             LOGGER.debug("Payload: {}", disciplinaDTO);
@@ -64,10 +89,12 @@ public class DisciplinaService {
             disciplinaExistente = iDisciplinaRepository.save(disciplinaExistente);
             return DisciplinaDTO.of(disciplinaExistente);
         }
-        throw new IllegalArgumentException(String.format("disciplina de ID %s não est´cadrastada", id));
+        throw new IllegalArgumentException(String.format("disciplina de ID %s não está cadrastada", id));
     }
-    public  void deleteById(long id){
-        LOGGER.info("recebendo delete para disciplina de ID:{}",id);
+
+    public void deleteById(long id) {
+        LOGGER.info("recebendo delete para disciplina de ID:{}", id);
         this.iDisciplinaRepository.deleteById(id);
     }
+
 }

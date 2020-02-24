@@ -17,8 +17,13 @@ public class Nota {
     private String codNota;
     @Column(name = "nota" , nullable = true)
     private double nota;
-    @Column(name = "periodo", nullable = true)
-    private String periodo;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "periodo")
+    private SemestreNota periodo;
+
+
+
+
 
     @ManyToOne
     @JoinColumn(name = "aluno" , referencedColumnName = "cod_aluno")
@@ -44,11 +49,11 @@ public class Nota {
         this.nota = nota;
     }
 
-    public String getPeriodo() {
+    public SemestreNota getPeriodo() {
         return periodo;
     }
 
-    public void setPeriodo(String periodo) {
+    public void setPeriodo(SemestreNota periodo) {
         this.periodo = periodo;
     }
 

@@ -1,7 +1,6 @@
 package com.example.escolahbsis.instituicao;
 
 
-
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -12,7 +11,7 @@ public class Instituicao implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
-    @Column(name = "cod_instituicao", unique = true, nullable = false,length = 10)
+    @Column(name = "cod_instituicao", unique = true, nullable = false, length = 10)
     private String codInstituicao;
     @Column(name = "nome_instituicao", nullable = false, length = 255)
     private String nomeInstituicao;
@@ -20,7 +19,6 @@ public class Instituicao implements Serializable {
     private String telefoneInstituicao;
     @Column(name = "endereco_instituicao", nullable = false, length = 255)
     private String enderecoInstituicao;
-
 
 
     public long getId() {

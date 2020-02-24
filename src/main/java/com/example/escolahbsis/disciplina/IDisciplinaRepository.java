@@ -9,4 +9,6 @@ import java.util.Optional;
 @Repository
 public interface IDisciplinaRepository extends JpaRepository<Disciplina, Long> {
     Optional<Disciplina> findByCodDisciplina(String codDisciplina);
+
+
 }
