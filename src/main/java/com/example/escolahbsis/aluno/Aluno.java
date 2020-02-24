@@ -1,7 +1,6 @@
 package com.example.escolahbsis.aluno;
 
 import com.example.escolahbsis.alunoTurma.AlunoTurma;
-import com.example.escolahbsis.alunoTurma.AlunoTurmaDTO;
 
 import javax.persistence.*;
 import java.io.Serializable;

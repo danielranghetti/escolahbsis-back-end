@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -36,30 +38,34 @@ public class InstituicaoService {
         return InstituicaoDTO.of(instituicao);
     }
 
-    public void validation(InstituicaoDTO instituicaoDTO){
+    public void validation(InstituicaoDTO instituicaoDTO) {
         LOGGER.info("Validando Instituição");
 
-        if (StringUtils.isEmpty(instituicaoDTO)){
+        if (StringUtils.isEmpty(instituicaoDTO)) {
             throw new IllegalArgumentException("instituição não deve ser nula");
         }
-        if (StringUtils.isEmpty(instituicaoDTO.getCodInstituicao())){
-            throw  new IllegalArgumentException("Código não deve ser nulo");
+        if (StringUtils.isEmpty(instituicaoDTO.getCodInstituicao())) {
+            throw new IllegalArgumentException("Código não deve ser nulo");
         }
-        if (StringUtils.isEmpty(instituicaoDTO.getEnderecoInstituicao())){
+        if (instituicaoDTO.getCodInstituicao().length() != 10) {
+            throw new IllegalArgumentException("Código d instituição deve conter dez digitos");
+        }
+        if (StringUtils.isEmpty(instituicaoDTO.getEnderecoInstituicao())) {
             throw new IllegalArgumentException("Endereço não deve ser nulo");
         }
-        if (StringUtils.isEmpty(instituicaoDTO.getTelefoneInstituicao())){
+        if (StringUtils.isEmpty(instituicaoDTO.getTelefoneInstituicao())) {
             throw new IllegalArgumentException("Telefone não deve ser nulo");
         }
 
     }
-    public InstituicaoDTO findById(long id){
+
+    public InstituicaoDTO findById(long id) {
         Optional<Instituicao> instituicaoOptional = this.iInstituicaoRepository.findById(id);
 
-        if (instituicaoOptional.isPresent()){
-          return InstituicaoDTO.of(instituicaoOptional.get());
+        if (instituicaoOptional.isPresent()) {
+            return InstituicaoDTO.of(instituicaoOptional.get());
         }
-        throw new IllegalArgumentException(String.format("Instituição de ID %s não existe",id));
+        throw new IllegalArgumentException(String.format("Instituição de ID %s não existe", id));
     }
 
     public InstituicaoDTO updat(InstituicaoDTO instituicaoDTO, long id) {
@@ -84,17 +90,28 @@ public class InstituicaoService {
 
         throw new IllegalArgumentException(String.format("Instituiçao de ID %s não existe", id));
     }
-    public void delete(long id){
+
+    public void delete(long id) {
         LOGGER.info("Executando Delete para instituição de ID: [{}]", id);
         this.iInstituicaoRepository.deleteById(id);
     }
-    public Instituicao findByCodIstituicao( String codInstituicao){
+
+    public Instituicao findByCodIstituicao(String codInstituicao) {
         Optional<Instituicao> instituicaoOptional = this.iInstituicaoRepository.findByCodInstituicao(codInstituicao);
-        if (instituicaoOptional.isPresent()){
+        if (instituicaoOptional.isPresent()) {
             return instituicaoOptional.get();
         }
         throw new IllegalArgumentException("Código da Instituição não cadatrado");
     }
 
+    public List<Instituicao> findAll() {
+        List<Instituicao> Instituicaos = new ArrayList<>();
+        try {
+            Instituicaos = iInstituicaoRepository.findAll();
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+        }
+        return Instituicaos;
+    }
 
 }

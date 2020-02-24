@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.*;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +71,9 @@ public class AlunoService {
         }
         if (StringUtils.isEmpty(alunoDTO.getCodAluno())){
             throw new IllegalArgumentException("Código aluno não deve ser nulo");
+        }
+        if (alunoDTO.getCodAluno().length() != 10){
+            throw new IllegalArgumentException("Código do aluno tem que ter 10 digítos");
         }
         if (StringUtils.isEmpty(alunoDTO.getEnderecoAluno())){
             throw new IllegalArgumentException("endereço do aluno não deve ser nulo");
@@ -146,6 +149,7 @@ public class AlunoService {
         }
         return alunoTurmas;
     }
+
 
 }
 

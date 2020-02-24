@@ -14,7 +14,8 @@ public class AlunoTurmaDTO {
         this.aluno = aluno;
         this.turma = turma;
     }
-    public static AlunoTurmaDTO of(AlunoTurma alunoTurma){
+
+    public static AlunoTurmaDTO of(AlunoTurma alunoTurma) {
         return new AlunoTurmaDTO(
                 alunoTurma.getId(),
                 alunoTurma.getAluno().getCodAluno(),

@@ -15,7 +15,7 @@ public class AlunoTurma implements Serializable {
     @Column(name = "id")
     private long id;
     @ManyToOne
-    @JoinColumn(name = "aluno",referencedColumnName = "cod_aluno")
+    @JoinColumn(name = "aluno", referencedColumnName = "cod_aluno")
     private Aluno aluno;
     @ManyToOne
     @JoinColumn(name = "turma", referencedColumnName = "cod_turma")

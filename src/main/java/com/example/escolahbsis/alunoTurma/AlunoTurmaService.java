@@ -16,14 +16,14 @@ public class AlunoTurmaService {
     private final AlunoConexao alunoConexao;
 
     @Autowired
-    public AlunoTurmaService(IAlunoTurmaRepository iAlunoTurmaRepository, TurmaService turmaService,AlunoConexao alunoConexao) {
+    public AlunoTurmaService(IAlunoTurmaRepository iAlunoTurmaRepository, TurmaService turmaService, AlunoConexao alunoConexao) {
         this.iAlunoTurmaRepository = iAlunoTurmaRepository;
         this.turmaService = turmaService;
         this.alunoConexao = alunoConexao;
 
     }
 
-    public AlunoTurmaDTO save(AlunoTurmaDTO alunoTurmaDTO){
+    public AlunoTurmaDTO save(AlunoTurmaDTO alunoTurmaDTO) {
         AlunoTurma alunoTurma = new AlunoTurma();
         alunoTurma.setId(alunoTurmaDTO.getId());
         alunoTurma.setTurma(turmaService.findByCodTurmaEntidade(alunoTurmaDTO.getTurma()));

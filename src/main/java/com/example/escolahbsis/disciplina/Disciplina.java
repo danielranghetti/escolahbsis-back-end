@@ -3,10 +3,11 @@ package com.example.escolahbsis.disciplina;
 import com.example.escolahbsis.professor.Professor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "disciplina")
-public class Disciplina {
+public class Disciplina implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +19,7 @@ public class Disciplina {
     private String nomeDisciplina;
 
     @ManyToOne
-    @JoinColumn(name = "professor" , referencedColumnName = "cod_professor")
+    @JoinColumn(name = "professor", referencedColumnName = "cod_professor")
     private Professor professor;
 
     public long getId() {
