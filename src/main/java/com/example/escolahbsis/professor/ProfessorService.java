@@ -46,8 +46,8 @@ public class ProfessorService {
         if (StringUtils.isEmpty(professorDTO.getCodProfessor())) {
             throw new IllegalArgumentException("Código de professor deve ser informado");
         }
-        if (professorDTO.getCodProfessor().length() != 10) {
-            throw new IllegalArgumentException("Código do professor deve conter dez digitos");
+        if (professorDTO.getCodProfessor().length() != 4) {
+            throw new IllegalArgumentException("Código do professor deve conter 4 digitos");
         }
         if (StringUtils.isEmpty(professorDTO.getEnderecoProfessor())) {
             throw new IllegalArgumentException("O endereço do professor deve ser informado");

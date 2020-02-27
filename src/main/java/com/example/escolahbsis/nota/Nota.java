@@ -15,18 +15,18 @@ public class Nota {
     private long id;
     @Column(name = "cod_nota", nullable = true, unique = true)
     private String codNota;
-    @Column(name = "nota" , nullable = true)
-    private double nota;
-    @Enumerated(EnumType.STRING)
+    @Column(name = "nota_primeira", nullable = true)
+    private double notaPrimeira;
+    @Column(name = "nota_segunda", nullable = true)
+    private double notaSegunda;
     @Column(name = "periodo")
-    private SemestreNota periodo;
-
-
-
+    private String periodo;
+    @Column(name = "media")
+    private double media;
 
 
     @ManyToOne
-    @JoinColumn(name = "aluno" , referencedColumnName = "cod_aluno")
+    @JoinColumn(name = "aluno", referencedColumnName = "cod_aluno")
     private Aluno aluno;
 
     @ManyToOne
@@ -41,19 +41,35 @@ public class Nota {
         this.id = id;
     }
 
-    public double getNota() {
-        return nota;
+    public String getCodNota() {
+        return codNota;
     }
 
-    public void setNota(double nota) {
-        this.nota = nota;
+    public void setCodNota(String codNota) {
+        this.codNota = codNota;
     }
 
-    public SemestreNota getPeriodo() {
+    public double getNotaPrimeira() {
+        return notaPrimeira;
+    }
+
+    public void setNotaPrimeira(double notaPrimeira) {
+        this.notaPrimeira = notaPrimeira;
+    }
+
+    public double getNotaSegunda() {
+        return notaSegunda;
+    }
+
+    public void setNotaSegunda(double notaSegunda) {
+        this.notaSegunda = notaSegunda;
+    }
+
+    public String getPeriodo() {
         return periodo;
     }
 
-    public void setPeriodo(SemestreNota periodo) {
+    public void setPeriodo(String periodo) {
         this.periodo = periodo;
     }
 
@@ -73,12 +89,12 @@ public class Nota {
         this.disciplina = disciplina;
     }
 
-    public String getCodNota() {
-        return codNota;
+    public double getMedia() {
+        return media;
     }
 
-    public void setCodNota(String codNota) {
-        this.codNota = codNota;
+    public void setMedia(double media) {
+        this.media = media;
     }
 
     @Override
@@ -86,8 +102,10 @@ public class Nota {
         return "Nota{" +
                 "id=" + id +
                 ", codNota='" + codNota + '\'' +
-                ", nota=" + nota +
+                ", notaPrimeira=" + notaPrimeira +
+                ", notaSegunda=" + notaSegunda +
                 ", periodo='" + periodo + '\'' +
+                ", media='" + media + '\'' +
                 ", aluno=" + aluno +
                 ", disciplina=" + disciplina +
                 '}';

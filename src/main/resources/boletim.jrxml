@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Coffee_Landscape" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="df013db5-f76e-44d3-b0df-bcbc46d93160">
-
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -21,7 +20,11 @@
 	<field name="nomeDisciplina" class="java.lang.Object">
 		<property name="net.sf.jasperreports.javabean.field.property" value="disciplina.nomeDisciplina"/>
 	</field>
-	<field name="nota" class="java.lang.Double"/>
+	<field name="notaPrimeira" class="java.lang.Double"/>
+	<field name="notaSegunda" class="java.lang.Double"/>
+	<field name="periodo" class="java.lang.String"/>
+	<field name="media" class="java.lang.Double"/>
+
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -39,7 +42,6 @@
 				<textElement textAlignment="Center">
 					<font fontName="Times New Roman" size="24"/>
 				</textElement>
-				<text><![CDATA[Boletim]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Column header" x="0" y="50" width="240" height="31" forecolor="#000000" uuid="a89cb965-c11a-4e97-b7e2-7580c156feb7">
@@ -50,13 +52,20 @@
 				</textElement>
 				<text><![CDATA[Aluno(a):]]></text>
 			</staticText>
+			<textField>
+				<reportElement style="Detail" x="320" y="79" width="110" height="15" uuid="3cc21778-7cb3-469f-9241-3faea6256e08">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dce0535d-6118-416e-86cb-ab93b714587"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{periodo}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="21" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<line>
 				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="802" height="1" forecolor="#8CB2FA" uuid="e9d2002a-c8ee-4649-a258-640dad29110c"/>
 				<graphicElement>
@@ -71,18 +80,25 @@
 				<text><![CDATA[Disciplina]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="180" y="0" width="110" height="15" forecolor="#000000" uuid="3e137f7b-d833-420e-8c74-574f0939a1c4">
+				<reportElement style="Column header" x="200" y="0" width="110" height="15" forecolor="#000000" uuid="3e137f7b-d833-420e-8c74-574f0939a1c4">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dce0535d-6118-416e-86cb-ab93b7adc9d2"/>
 				</reportElement>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA[Primeiro Semestre]]></text>
+				<text><![CDATA[Primeira Nota]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="310" y="0" width="110" height="15" forecolor="#000000" uuid="3e137f7b-d833-420e-8c74-574f0939a1c4">
+				<reportElement style="Column header" x="370" y="0" width="110" height="15" forecolor="#000000" uuid="3e137f7b-d833-420e-8c74-574f0939a1c4">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dce0535d-6118-416e-86cb-ab93b7"/>
 				</reportElement>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA[segundo Semestre]]></text>
+				<text><![CDATA[Segundo Nota]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="572" y="0" width="110" height="15" forecolor="#000000" uuid="faf2f67a-86ac-41d7-9793-ca55ce424fcf">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dce0535d-6118-416e-86cb-ab93b7"/>
+				</reportElement>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Média]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -116,21 +132,29 @@
 					<textFieldExpression><![CDATA[$F{nomeDisciplina}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="Detail" x="180" y="1" width="110" height="15" uuid="208d4160-0528-46f9-9dd2-f8178f6ccd7c">
+					<reportElement style="Detail" x="200" y="0" width="110" height="15" uuid="208d4160-0528-46f9-9dd2-f8178f6ccd7c">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dce0535d-6118-416e-86cb-ab93b7adc9d2"/>
 					</reportElement>
 					<textElement textAlignment="Center"/>
-					<textFieldExpression><![CDATA[$F{nota}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{notaPrimeira}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement style="Detail" x="310" y="0" width="110" height="15" uuid="3470a27f-c8ee-4747-b0d6-4bb57e5294b7">
+					<reportElement style="Detail" x="370" y="-1" width="110" height="15" uuid="3470a27f-c8ee-4747-b0d6-4bb57e5294b7">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dce0535d-6118-416e-86cb-ab93b7"/>
 					</reportElement>
 					<textElement textAlignment="Center"/>
-					<textFieldExpression><![CDATA[$F{nota}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{notaSegunda}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Detail" x="579" y="1" width="110" height="15" uuid="f690835b-75fd-4250-894e-863cb559db0d">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dce0535d-6118-416e-86cb-ab93b7"/>
+					</reportElement>
+					<textElement textAlignment="Center"/>
+					<textFieldExpression><![CDATA[$F{media}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>
+		<band height="50"/>
 	</detail>
 	<columnFooter>
 		<band height="6" splitType="Stretch">

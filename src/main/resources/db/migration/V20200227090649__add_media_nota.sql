@@ -1,0 +1,2 @@
+ALTER TABLE nota
+ADD media DECIMAL(4,2) NOT NULL;

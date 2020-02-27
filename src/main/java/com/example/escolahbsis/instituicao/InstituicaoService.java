@@ -47,8 +47,8 @@ public class InstituicaoService {
         if (StringUtils.isEmpty(instituicaoDTO.getCodInstituicao())) {
             throw new IllegalArgumentException("Código não deve ser nulo");
         }
-        if (instituicaoDTO.getCodInstituicao().length() != 10) {
-            throw new IllegalArgumentException("Código d instituição deve conter dez digitos");
+        if (instituicaoDTO.getCodInstituicao().length() != 4) {
+            throw new IllegalArgumentException("Código d instituição deve conter 4 digitos");
         }
         if (StringUtils.isEmpty(instituicaoDTO.getEnderecoInstituicao())) {
             throw new IllegalArgumentException("Endereço não deve ser nulo");

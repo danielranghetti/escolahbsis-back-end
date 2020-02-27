@@ -43,8 +43,10 @@ public class NotaService {
         nota.setCodNota(notaDTO.getCodNota());
         nota.setAluno(alunoService.findByCodAluno(notaDTO.getAluno()));
         nota.setDisciplina(disciplinaService.findByCodDisciplinaEntidade(notaDTO.getDisciplina()));
-        nota.setNota(notaDTO.getNota());
-        nota.setPeriodo(SemestreNota.valueOf(notaDTO.getPeriodo()));
+        nota.setNotaPrimeira(notaDTO.getNotaPrimeira());
+        nota.setNotaSegunda(notaDTO.getNotaSegunda());
+        nota.setPeriodo(notaDTO.getPeriodo());
+        nota.setMedia((notaDTO.getNotaPrimeira() + notaDTO.getNotaSegunda()) / 2);
 
         nota = this.iNotaRepository.save(nota);
         return NotaDTO.of(nota);
@@ -57,8 +59,8 @@ public class NotaService {
         if (StringUtils.isEmpty(notaDTO.getCodNota())) {
             throw new IllegalArgumentException("Código da nota deve ser informado");
         }
-        if (notaDTO.getCodNota().length() != 10) {
-            throw new IllegalArgumentException("Código deve conter dez digitos");
+        if (notaDTO.getCodNota().length() != 4) {
+            throw new IllegalArgumentException("Código deve conter 4 digitos");
         }
         if (StringUtils.isEmpty(notaDTO.getAluno())) {
             throw new IllegalArgumentException("Código do aluno deve ser informado");
@@ -69,14 +71,25 @@ public class NotaService {
         if (StringUtils.isEmpty(notaDTO.getPeriodo())) {
             throw new IllegalArgumentException("O perido da nota deve ser informada");
         }
-        if (StringUtils.isEmpty(notaDTO.getNota())) {
+        if (StringUtils.isEmpty(notaDTO.getNotaPrimeira())) {
             throw new IllegalArgumentException("Nota deve ser informada");
         }
-        if (notaDTO.getNota() < 0 || notaDTO.getNota() > 10) {
+        if (notaDTO.getNotaPrimeira() < 0 || notaDTO.getNotaPrimeira() > 10) {
             throw new IllegalArgumentException("Nota não deve ser menor que 0 ou maior que 10");
         }
+        if (StringUtils.isEmpty(notaDTO.getNotaSegunda())) {
+            throw new IllegalArgumentException("Nota deve ser informada");
+        }
+        if (notaDTO.getNotaSegunda() < 0 || notaDTO.getNotaSegunda() > 10) {
+            throw new IllegalArgumentException("Nota não deve ser menor que 0 ou maior que 10");
+        }
+        if (StringUtils.isEmpty(notaDTO.getMedia())) {
+            throw new IllegalArgumentException("Média não deve ser nula");
+        }
+         notaDTO.setMedia((notaDTO.getNotaPrimeira() + notaDTO.getNotaSegunda()) / 2);
 
     }
+
 
     public NotaDTO update(long id, NotaDTO notaDTO) {
         Optional<Nota> notaOptional = this.iNotaRepository.findById(id);
@@ -89,8 +102,10 @@ public class NotaService {
 
             notaExistente.setAluno(alunoService.findByCodAluno(notaDTO.getAluno()));
             notaExistente.setDisciplina(disciplinaService.findByCodDisciplinaEntidade(notaDTO.getDisciplina()));
-            notaExistente.setPeriodo(SemestreNota.valueOf(notaDTO.getPeriodo()));
-            notaExistente.setNota(notaDTO.getNota());
+            notaExistente.setPeriodo(notaDTO.getPeriodo());
+            notaExistente.setNotaPrimeira(notaDTO.getNotaPrimeira());
+            notaExistente.setNotaSegunda(notaDTO.getNotaSegunda());
+
 
             notaExistente = iNotaRepository.save(notaExistente);
             return NotaDTO.of(notaExistente);
@@ -107,11 +122,11 @@ public class NotaService {
     }
 
     public Nota findByPeriodo(String periodo) {
-        Optional<Nota> notaOptional = this.iNotaRepository.findByCodNota(periodo);
+        Optional<Nota> notaOptional = this.iNotaRepository.findByPeriodo(periodo);
         if (notaOptional.isPresent()) {
             return notaOptional.get();
         }
-        throw new IllegalArgumentException(String.format("Nota de periodo:{} não cadatrada", periodo));
+        throw new IllegalArgumentException(String.format("Nota de periodo %s não cadatrada", periodo));
     }
 
     public void delete(long id) {
@@ -139,35 +154,12 @@ public class NotaService {
         return notaDTOList;
     }
 
-    public double mediaNotaPrimeiroSemestre(Nota nota, NotaDTO notaDTO) {
-        int contadorPrimeiro = 0;
-        double primeira = 0;
 
-        if (nota.getPeriodo().equals("S1")) {
-            if (nota.getNota() >= 0) {
-                contadorPrimeiro++;
-                primeira = notaDTO.setMediaPrimeira((nota.getNota() + nota.getNota()) / contadorPrimeiro);
-            }
-        }
-        return primeira;
-    }
 
-    public double mediaNotaSegundoSemestre(Nota nota, NotaDTO notaDTO) {
-        double segunda = 0;
-        int contadorSegundo = 0;
-        if (nota.getPeriodo().equals("S1")) {
-            if (nota.getNota() >= 0) {
-                contadorSegundo++;
-                segunda = notaDTO.setMediaPrimeira((nota.getNota() + nota.getNota()) / contadorSegundo);
-            }
-        }
-        return segunda;
-    }
-
-    public String exportaReport(String format, String codAluno) throws FileNotFoundException, JRException {
+    public String exportaReport(String format, String codAluno, String periodo) throws FileNotFoundException, JRException {
         LOGGER.info(String.format("Gerando Boletim do aluno de código %s", codAluno));
         String path = "C:\\Users\\daniel.ranghetti\\Desktop\\exportJaper";
-        List<Nota> notaList = iNotaRepository.findByAluno(alunoService.findByCodAluno(codAluno));
+        List<Nota> notaList = iNotaRepository.findByAlunoAndPeriodo(alunoService.findByCodAluno(codAluno), periodo);
         File file = ResourceUtils.getFile("classpath:boletim.jrxml");
         JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(notaList);

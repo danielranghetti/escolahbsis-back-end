@@ -1,73 +1,43 @@
 package com.example.escolahbsis.nota;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
-import javax.validation.constraints.NotBlank;
 
 
 public class NotaDTO {
 
     private long id;
-    @NotBlank
-    private double nota;
-    @NotEmpty(message = "periodo deve ser informado")
+    private double notaPrimeira;
+    private double notaSegunda;
     private String periodo;
     private String aluno;
     private String disciplina;
     private String codNota;
-    private double mediaPrimeira;
-    private double mediaSegunda;
-
+    private double media;
 
     public NotaDTO() {
     }
 
-    public NotaDTO(long id, @NotBlank double nota, @NotEmpty(message = "periodo deve ser informado") String periodo, String aluno, String disciplina, String codNota) {
+    public NotaDTO(long id, double notaPrimeira, double notaSegunda, String periodo, String aluno, String disciplina, String codNota, double media) {
         this.id = id;
-        this.nota = nota;
+        this.notaPrimeira = notaPrimeira;
+        this.notaSegunda = notaSegunda;
         this.periodo = periodo;
         this.aluno = aluno;
         this.disciplina = disciplina;
         this.codNota = codNota;
+        this.media = media;
     }
 
-    public NotaDTO(long id, @NotBlank double nota, @NotEmpty(message = "periodo deve ser informado") String periodo, String aluno, String disciplina, String codNota, double mediaPrimeira, double mediaSegunda) {
-        this.id = id;
-        this.nota = nota;
-        this.periodo = periodo;
-        this.aluno = aluno;
-        this.disciplina = disciplina;
-        this.codNota = codNota;
-        this.mediaPrimeira = mediaPrimeira;
-        this.mediaSegunda = mediaSegunda;
-    }
-
-    public static NotaDTO of(Nota nota) {
+    public static NotaDTO of(Nota nota){
         return new NotaDTO(
                 nota.getId(),
-                nota.getNota(),
-                nota.getPeriodo().getDescricao(),
+                nota.getNotaPrimeira(),
+                nota.getNotaSegunda(),
+                nota.getPeriodo(),
                 nota.getAluno().getCodAluno(),
                 nota.getDisciplina().getCodDisciplina(),
-                nota.getCodNota()
+                nota.getCodNota(),
+                nota.getMedia()
         );
-    }
-
-    public double getMediaPrimeira() {
-        return mediaPrimeira;
-    }
-
-    public double setMediaPrimeira(double mediaPrimeira) {
-        this.mediaPrimeira = mediaPrimeira;
-        return mediaPrimeira;
-    }
-
-    public double getMediaSegunda() {
-        return mediaSegunda;
-    }
-
-    public void setMediaSegunda(double mediaSegunda) {
-        this.mediaSegunda = mediaSegunda;
     }
 
     public long getId() {
@@ -78,12 +48,20 @@ public class NotaDTO {
         this.id = id;
     }
 
-    public double getNota() {
-        return nota;
+    public double getNotaPrimeira() {
+        return notaPrimeira;
     }
 
-    public void setNota(double nota) {
-        this.nota = nota;
+    public void setNotaPrimeira(double notaPrimeira) {
+        this.notaPrimeira = notaPrimeira;
+    }
+
+    public double getNotaSegunda() {
+        return notaSegunda;
+    }
+
+    public void setNotaSegunda(double notaSegunda) {
+        this.notaSegunda = notaSegunda;
     }
 
     public String getPeriodo() {
@@ -118,17 +96,25 @@ public class NotaDTO {
         this.codNota = codNota;
     }
 
+    public double getMedia() {
+        return media;
+    }
+
+    public void setMedia(double media) {
+        this.media = media;
+    }
+
     @Override
     public String toString() {
         return "NotaDTO{" +
                 "id=" + id +
-                ", nota=" + nota +
+                ", notaPrimeira=" + notaPrimeira +
+                ", notaSegunda=" + notaSegunda +
                 ", periodo='" + periodo + '\'' +
                 ", aluno='" + aluno + '\'' +
                 ", disciplina='" + disciplina + '\'' +
                 ", codNota='" + codNota + '\'' +
-                ", mediaPrimeira=" + mediaPrimeira +
-                ", mediaSegunda=" + mediaSegunda +
+                ", media=" + media +
                 '}';
     }
 }

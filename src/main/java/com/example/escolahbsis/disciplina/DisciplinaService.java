@@ -38,8 +38,8 @@ public class DisciplinaService {
         if (StringUtils.isEmpty(disciplinaDTO.getCodDisciplina())) {
             throw new IllegalArgumentException("Código da disciplina não mdeve ser nulo");
         }
-        if (disciplinaDTO.getCodDisciplina().length() != 10) {
-            throw new IllegalArgumentException("código da disciplina tem que conte dez digitos");
+        if (disciplinaDTO.getCodDisciplina().length() != 4) {
+            throw new IllegalArgumentException("código da disciplina tem que conte 4 digitos");
         }
     }
 
