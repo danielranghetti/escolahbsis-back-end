@@ -1,9 +1,12 @@
 package com.example.escolahbsis.aluno;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin("*")
 @RestController
@@ -22,6 +25,12 @@ public class AlunoRest {
     public AlunoDTO find(@PathVariable("id") long id) {
         LOGGER.info("Recebendo consulta para aluno de ID: {}", id);
         return this.alunoService.findById(id);
+    }
+
+    @GetMapping("/todos")
+    public List<Aluno> findAll() {
+        LOGGER.info("Recebendo consulta para Lista de alunos");
+        return alunoService.findAllAluno();
     }
 
     @PostMapping

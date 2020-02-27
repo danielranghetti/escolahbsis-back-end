@@ -50,8 +50,8 @@ public class TurmaService {
         if (StringUtils.isEmpty(turmaDTO.getCodTurma())) {
             throw new IllegalArgumentException("Código da turma não deve ser nulo");
         }
-        if (turmaDTO.getCodTurma().length() != 10){
-            throw new IllegalArgumentException("Código da turma deve conter dez digitos");
+        if (turmaDTO.getCodTurma().length() != 4){
+            throw new IllegalArgumentException("Código da turma deve conter 4 digitos");
         }
         if (StringUtils.isEmpty(turmaDTO.getPeriodoTurma())) {
             throw new IllegalArgumentException("Periodo da turma não deve ser nulo");

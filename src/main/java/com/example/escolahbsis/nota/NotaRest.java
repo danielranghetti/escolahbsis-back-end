@@ -47,10 +47,10 @@ public class NotaRest {
         this.notaService.delete(id);
     }
 
-    @GetMapping("/report/{format}/{codAluno}")
-    public String export(@PathVariable("format") String format, @PathVariable("codAluno") String codAluno) throws FileNotFoundException, JRException {
+    @GetMapping("/report/{format}/{codAluno}/{periodo}")
+    public String export(@PathVariable("format") String format, @PathVariable("codAluno") String codAluno, @PathVariable("periodo") String periodo) throws FileNotFoundException, JRException {
         LOGGER.info("Recebendo report");
-        return notaService.exportaReport(format, codAluno);
+        return notaService.exportaReport(format, codAluno,periodo);
 
     }
 

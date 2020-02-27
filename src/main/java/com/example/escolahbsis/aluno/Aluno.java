@@ -1,6 +1,10 @@
 package com.example.escolahbsis.aluno;
 
 import com.example.escolahbsis.alunoTurma.AlunoTurma;
+import com.fasterxml.jackson.annotation.JacksonInject;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -30,6 +34,7 @@ public class Aluno implements Serializable {
     private int matricula;
 
     @OneToMany(mappedBy = "aluno")
+    @JsonIgnore
     private List<AlunoTurma> alunoTurmaList;
 
     public List<AlunoTurma> getAlunoTurmaList() {

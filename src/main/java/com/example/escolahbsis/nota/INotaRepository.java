@@ -9,8 +9,8 @@ import java.util.Optional;
 
 @Repository
 public interface INotaRepository extends JpaRepository<Nota, Long> {
-    Optional<Nota> findByCodNota(String periodo);
+    Optional<Nota> findByPeriodo(String periodo);
 
-    List<Nota> findByAluno(Aluno aluno);
+    List<Nota> findByAlunoAndPeriodo(Aluno aluno, String periodo);
 
 }
