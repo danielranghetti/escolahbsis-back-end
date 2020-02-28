@@ -20,6 +20,7 @@
 
 <h3>Ordem cadastral a ser seguida</h3>
 <ul>
+     <li>Os código dos cadastros deve conter 4 digitos;</li>
     <li>Cadastrar uma Instituição;</li>
     <li>Cadastrar uma turma;</li>
     <li>Cadastrar um aluno;</li>
